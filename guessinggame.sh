@@ -2,7 +2,7 @@
 # File: guessinggame.sh
 
 found=false
-dirfiles=`find . -type f | wc -l`
+dirfiles=`find . -maxdepth 1 -type f,b,c,p,l,s | wc -l`
 
 function check_number {
 	if [[ $answer -gt $dirfiles ]] 
@@ -27,7 +27,12 @@ do
 	echo
 	echo "How much files in that dir ?"
 	read answer
-	check_number
+	if [ -n "$answer" ] && [ "$answer" -eq "$answer" ] 2>/dev/null
+	then
+		check_number
+	else
+		echo "$answer is not a number."
+	fi
 done
 
 
